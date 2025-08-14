@@ -1,0 +1,298 @@
+{
+  "narrative_title": "Bitcoin: The Mysterious Digital Revolution",
+  "narrative_segments": [
+    {
+      "segment_id": 1,
+      "title": "Introduction: The Bitcoin Phenomenon Since 2018",
+      "narrative_text": "It seems that since 2018, many people have heard about the concept of Bitcoin. They've heard about its dramatic price surges, how it has made some people rich overnight, and its connection to financial crimes.",
+      "key_questions": ["What is Bitcoin's public awareness timeline?", "How dramatic were the price surges?"],
+      "required_data": [
+        {
+          "data_type": "Google Trends Data",
+          "description": "Bitcoin search interest over time since 2018",
+          "specific_metrics": ["Search volume", "Geographic distribution", "Related queries"]
+        },
+        {
+          "data_type": "Price Data",
+          "description": "Bitcoin price history with major surges highlighted",
+          "specific_metrics": ["Daily/hourly prices", "Volatility metrics", "Major price events"]
+        },
+        {
+          "data_type": "Media Coverage Data",
+          "description": "News articles and social media mentions",
+          "specific_metrics": ["Sentiment analysis", "Coverage volume", "Crime-related mentions"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "Google Trends API",
+          "url": "https://trends.google.com/trends/",
+          "access_method": "Free web interface, unofficial APIs available"
+        },
+        {
+          "source": "CoinGecko API",
+          "url": "https://www.coingecko.com/en/api",
+          "access_method": "Free API with rate limits"
+        },
+        {
+          "source": "NewsAPI",
+          "url": "https://newsapi.org/",
+          "access_method": "Free tier available"
+        }
+      ],
+      "visualization_suggestions": [
+        "Line chart showing Google Trends vs Bitcoin price",
+        "Timeline of major Bitcoin news events",
+        "Geographic heatmap of Bitcoin interest"
+      ]
+    },
+    {
+      "segment_id": 2,
+      "title": "The Mystery: What Exactly is Bitcoin?",
+      "narrative_text": "However, it still remains very mysterious. What exactly is it?",
+      "key_questions": ["What are Bitcoin's fundamental characteristics?", "How does it work technically?"],
+      "required_data": [
+        {
+          "data_type": "Technical Specifications",
+          "description": "Bitcoin blockchain technical data",
+          "specific_metrics": ["Block time", "Transaction throughput", "Network hash rate", "Node distribution"]
+        },
+        {
+          "data_type": "Adoption Metrics",
+          "description": "Bitcoin usage and adoption statistics",
+          "specific_metrics": ["Number of wallets", "Transaction volume", "Merchant adoption"]
+        },
+        {
+          "data_type": "Comparison Data",
+          "description": "Bitcoin vs traditional currency characteristics",
+          "specific_metrics": ["Transaction fees", "Settlement time", "Energy consumption"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "Blockchain.info API",
+          "url": "https://www.blockchain.com/api",
+          "access_method": "Free API"
+        },
+        {
+          "source": "Bitnodes",
+          "url": "https://bitnodes.io/api/",
+          "access_method": "Free API for network data"
+        },
+        {
+          "source": "Cambridge Bitcoin Electricity Consumption Index",
+          "url": "https://ccaf.io/cbeci/api",
+          "access_method": "Free API"
+        }
+      ],
+      "visualization_suggestions": [
+        "Infographic explaining Bitcoin vs traditional money",
+        "Network visualization of Bitcoin nodes globally",
+        "Animated explanation of blockchain transactions"
+      ]
+    },
+    {
+      "segment_id": 3,
+      "title": "The Maintainers: Who Keeps Bitcoin Running?",
+      "narrative_text": "Who maintains its operation?",
+      "key_questions": ["Who are the key stakeholders in Bitcoin ecosystem?", "How is Bitcoin governance structured?"],
+      "required_data": [
+        {
+          "data_type": "Mining Data",
+          "description": "Bitcoin mining pools and hash rate distribution",
+          "specific_metrics": ["Mining pool market share", "Geographic distribution", "Hash rate trends"]
+        },
+        {
+          "data_type": "Developer Activity",
+          "description": "Bitcoin Core development statistics",
+          "specific_metrics": ["GitHub commits", "Developer contributions", "Code changes over time"]
+        },
+        {
+          "data_type": "Node Distribution",
+          "description": "Bitcoin full node geographic and ISP distribution",
+          "specific_metrics": ["Node count by country", "ISP distribution", "Node version adoption"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "GitHub API",
+          "url": "https://api.github.com/repos/bitcoin/bitcoin",
+          "access_method": "Free API with authentication"
+        },
+        {
+          "source": "Mining Pool Stats",
+          "url": "https://www.blockchain.com/pools",
+          "access_method": "Web scraping or manual data collection"
+        },
+        {
+          "source": "Bitnodes API",
+          "url": "https://bitnodes.io/api/",
+          "access_method": "Free API"
+        }
+      ],
+      "visualization_suggestions": [
+        "Pie chart of mining pool distribution",
+        "World map showing node distribution",
+        "Timeline of developer activity and major updates"
+      ]
+    },
+    {
+      "segment_id": 4,
+      "title": "The Price Journey: A Decade of Changes",
+      "narrative_text": "What kind of price changes has it undergone in the past decade?",
+      "key_questions": ["How has Bitcoin price evolved?", "What were the major price catalysts?"],
+      "required_data": [
+        {
+          "data_type": "Historical Price Data",
+          "description": "Comprehensive Bitcoin price history 2014-2024",
+          "specific_metrics": ["Daily OHLC prices", "Market cap", "Trading volume", "Price volatility"]
+        },
+        {
+          "data_type": "Market Events",
+          "description": "Major events that influenced Bitcoin price",
+          "specific_metrics": ["Regulatory announcements", "Institutional adoption", "Technical upgrades", "Market crashes"]
+        },
+        {
+          "data_type": "Correlation Data",
+          "description": "Bitcoin price correlation with other assets",
+          "specific_metrics": ["Correlation with stocks", "Gold correlation", "Traditional currency correlation"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "CoinGecko API",
+          "url": "https://www.coingecko.com/en/api/documentation",
+          "access_method": "Free API with historical data"
+        },
+        {
+          "source": "Yahoo Finance API",
+          "url": "https://finance.yahoo.com/",
+          "access_method": "Free API for traditional assets comparison"
+        },
+        {
+          "source": "CoinMarketCap API",
+          "url": "https://coinmarketcap.com/api/",
+          "access_method": "Free tier available"
+        }
+      ],
+      "visualization_suggestions": [
+        "Interactive candlestick chart with event annotations",
+        "Logarithmic price chart showing major cycles",
+        "Heatmap showing price volatility over time",
+        "Correlation matrix with traditional assets"
+      ]
+    },
+    {
+      "segment_id": 5,
+      "title": "The Winners: Who Has Profited?",
+      "narrative_text": "Who has profited from it?",
+      "key_questions": ["Who are the major Bitcoin holders?", "What are the wealth distribution patterns?"],
+      "required_data": [
+        {
+          "data_type": "Address Analysis",
+          "description": "Bitcoin address wealth distribution",
+          "specific_metrics": ["Top holder addresses", "Wealth concentration", "Dormant vs active addresses"]
+        },
+        {
+          "data_type": "Institutional Holdings",
+          "description": "Corporate and institutional Bitcoin holdings",
+          "specific_metrics": ["Public company holdings", "ETF holdings", "Exchange reserves"]
+        },
+        {
+          "data_type": "Exchange Data",
+          "description": "Trading patterns and exchange flows",
+          "specific_metrics": ["Exchange inflows/outflows", "Trading volume by exchange", "Whale movements"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "BitcoinTreasuries.net",
+          "url": "https://bitcointreasuries.net/",
+          "access_method": "Manual data collection or web scraping"
+        },
+        {
+          "source": "Glassnode API",
+          "url": "https://glassnode.com/",
+          "access_method": "Paid API for advanced metrics"
+        },
+        {
+          "source": "Whale Alert API",
+          "url": "https://whale-alert.io/",
+          "access_method": "Freemium API"
+        }
+      ],
+      "visualization_suggestions": [
+        "Treemap showing Bitcoin wealth distribution",
+        "Timeline of major institutional adoptions",
+        "Sankey diagram of Bitcoin flows between addresses"
+      ]
+    },
+    {
+      "segment_id": 6,
+      "title": "The Future: What Lies Ahead?",
+      "narrative_text": "And what does its future hold?",
+      "key_questions": ["What are the future trends and predictions?", "What challenges and opportunities exist?"],
+      "required_data": [
+        {
+          "data_type": "Adoption Trends",
+          "description": "Bitcoin adoption metrics and projections",
+          "specific_metrics": ["Payment adoption", "Country-level adoption", "Lightning Network growth"]
+        },
+        {
+          "data_type": "Regulatory Landscape",
+          "description": "Global Bitcoin regulation status",
+          "specific_metrics": ["Legal status by country", "Regulatory developments", "CBDC competition"]
+        },
+        {
+          "data_type": "Technical Developments",
+          "description": "Bitcoin protocol improvements and scaling solutions",
+          "specific_metrics": ["Lightning Network capacity", "Taproot adoption", "Layer 2 solutions"]
+        }
+      ],
+      "data_sources": [
+        {
+          "source": "Lightning Network Statistics",
+          "url": "https://1ml.com/",
+          "access_method": "API available for network data"
+        },
+        {
+          "source": "Regulatory databases",
+          "url": "Various government websites",
+          "access_method": "Manual research and compilation"
+        },
+        {
+          "source": "Bitcoin development repositories",
+          "url": "https://github.com/bitcoin/bips",
+          "access_method": "GitHub API"
+        }
+      ],
+      "visualization_suggestions": [
+        "World map showing Bitcoin legal status",
+        "Growth projections with confidence intervals",
+        "Technology adoption timeline and roadmap"
+      ]
+    }
+  ],
+  "cross_segment_data_needs": [
+    {
+      "data_type": "Time Series Alignment",
+      "description": "Ensuring all time-based data uses consistent timestamps",
+      "importance": "Critical for narrative flow"
+    },
+    {
+      "data_type": "Data Quality Metrics",
+      "description": "Data reliability and source credibility scores",
+      "importance": "Essential for trustworthy storytelling"
+    }
+  ],
+  "technical_requirements": {
+    "data_formats": ["JSON", "CSV", "API responses"],
+    "update_frequency": "Daily for price data, weekly for other metrics",
+    "data_retention": "Full historical data with archiving strategy"
+  },
+  "ethical_considerations": [
+    "Privacy protection for individual addresses",
+    "Balanced representation of risks and benefits",
+    "Transparent disclosure of data sources and limitations"
+  ]
+}

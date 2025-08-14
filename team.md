@@ -1,0 +1,4 @@
+-沟通反馈很有效率，我很积极地想和团队一起对这个主题进行
+-我们课后hold online meeting for 1 hour，进行了关于各自进展和value propositon以及数据收集等针对topic的讨论
+-我负责了story 的into部分，我用我的叙事性的话串联了整个story
+-我提供了会议纪要，帮助大家align整个进展

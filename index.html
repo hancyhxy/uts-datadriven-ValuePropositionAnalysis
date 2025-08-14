@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Value Proposition Analysis - Interactive Data Mapping</title>
+    <meta name="description" content="Comprehensive Bitcoin narrative data mapping with interactive visualization for value proposition analysis.">
+    <meta name="keywords" content="Bitcoin, value proposition, data analysis, narrative mapping, cryptocurrency">
+    <meta name="author" content="Value Proposition Analysis Project">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-bar {
+            background-color: #34495e;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-bar a:hover, .nav-bar a.active {
+            background-color: #3498db;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 5px;
+        }
+
+        .language-switch button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .language-switch button.active {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-intro {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+
+        .project-intro h2 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .project-intro p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            border-bottom: 3px solid #f39c12;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin: 30px 0 15px 0;
+            font-size: 1.8em;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+
+        .table-container {
+            margin-bottom: 40px;
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            font-size: 14px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            padding: 15px 10px;
+            text-align: left;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+            transform: scale(1.001);
+            transition: all 0.2s ease;
+        }
+
+        .segment-row {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .segment-row:before {
+            content: '▶';
+            position: absolute;
+            left: 5px;
+            color: #3498db;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .segment-row.expanded:before {
+            transform: rotate(90deg);
+        }
+
+        .segment-row td:first-child {
+            padding-left: 25px;
+        }
+
+        .details-row {
+            display: none;
+            background-color: #f8f9fa;
+        }
+
+        .details-row.show {
+            display: table-row;
+        }
+
+        .details-content {
+            padding: 20px;
+            background-color: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        .sub-table {
+            margin-bottom: 25px;
+        }
+
+        .sub-table h3 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 5px;
+        }
+
+        .sub-table table {
+            font-size: 13px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .sub-table th {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            font-size: 12px;
+            padding: 10px 8px;
+        }
+
+        .badge {
+            background-color: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .badge.warning {
+            background-color: #f39c12;
+        }
+
+        .badge.success {
+            background-color: #27ae60;
+        }
+
+        .badge.danger {
+            background-color: #e74c3c;
+        }
+
+        .text-truncate {
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .expandable-text {
+            cursor: pointer;
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+        .url-link {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .url-link:hover {
+            text-decoration: underline;
+            color: #1abc9c;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #9b59b6, #e74c3c);
+            margin: 40px 0;
+            border-radius: 2px;
+        }
+
+        .footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .language-switch {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px 0;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-bar a {
+                margin: 5px 10px;
+                display: inline-block;
+            }
+        }
+
+        .intro-text {
+            background-color: #e8f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #27ae60;
+        }
+
+        /* Hidden class for language switching */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="language-switch">
+            <button class="lang-btn active" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+        <h1 data-en="Bitcoin Value Proposition Analysis" data-zh="比特币价值主张分析">Bitcoin Value Proposition Analysis</h1>
+        <p data-en="Interactive Data Mapping & Narrative Structure Analysis" data-zh="交互式数据映射与叙述结构分析">Interactive Data Mapping & Narrative Structure Analysis</p>
+    </header>
+
+    <nav class="nav-bar">
+        <a href="#overview" class="active" data-en="Overview" data-zh="概览">Overview</a>
+        <a href="#data-mapping" data-en="Data Mapping" data-zh="数据映射">Data Mapping</a>
+        <a href="#requirements" data-en="Requirements" data-zh="需求分析">Requirements</a>
+        <a href="#ethics" data-en="Ethics" data-zh="伦理考虑">Ethics</a>
+    </nav>
+
+    <div class="container">
+        <div class="project-intro" id="overview">
+            <h2 data-en="Project Overview" data-zh="项目概述">Project Overview</h2>
+            <p data-en="This project presents a comprehensive analysis of Bitcoin as a value proposition through data-driven narrative mapping. We explore six key narrative segments that collectively tell the story of Bitcoin's emergence, adoption, and future potential." data-zh="本项目通过数据驱动的叙述映射，全面分析比特币作为价值主张。我们探索六个关键叙述段落，共同讲述比特币的出现、采用和未来潜力。">
+                This project presents a comprehensive analysis of Bitcoin as a value proposition through data-driven narrative mapping. We explore six key narrative segments that collectively tell the story of Bitcoin's emergence, adoption, and future potential.
+            </p>
+            <p data-en="Each segment is supported by detailed data requirements, credible sources, and visualization suggestions to create a compelling and evidence-based narrative about Bitcoin's value proposition in the digital economy." data-zh="每个段落都有详细的数据需求、可信来源和可视化建议支持，以创建关于比特币在数字经济中价值主张的令人信服且基于证据的叙述。">
+                Each segment is supported by detailed data requirements, credible sources, and visualization suggestions to create a compelling and evidence-based narrative about Bitcoin's value proposition in the digital economy.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>6</h3>
+                <p data-en="Narrative Segments" data-zh="叙述段落">Narrative Segments</p>
+            </div>
+            <div class="stat-card">
+                <h3>18</h3>
+                <p data-en="Data Requirements" data-zh="数据需求">Data Requirements</p>
+            </div>
+            <div class="stat-card">
+                <h3>18</h3>
+                <p data-en="Data Sources" data-zh="数据源">Data Sources</p>
+            </div>
+            <div class="stat-card">
+                <h3>20</h3>
+                <p data-en="Visualizations" data-zh="可视化方案">Visualizations</p>
+            </div>
+        </div>
+
+        <div class="intro-text" id="data-mapping">
+            <strong data-en="Narrative Title:" data-zh="叙述标题:">Narrative Title:</strong> Bitcoin: The Mysterious Digital Revolution<br>
+            <strong data-en="Description:" data-zh="描述:">Description:</strong> 
+            <span data-en="This interactive table presents a comprehensive narrative structure about Bitcoin, featuring 6 main segments with their corresponding data requirements, data sources, and visualization suggestions. Click any row to expand and view detailed information." data-zh="此交互式表格展示了关于比特币的完整叙述结构，包含6个主要段落及其对应的数据需求、数据源和可视化建议。点击任意行可展开查看详细信息。">
+                This interactive table presents a comprehensive narrative structure about Bitcoin, featuring 6 main segments with their corresponding data requirements, data sources, and visualization suggestions. Click any row to expand and view detailed information.
+            </span>
+        </div>
+
+        <h2 data-en="📈 Narrative Segments Overview" data-zh="📈 叙述段落概览">📈 Narrative Segments Overview</h2>
+        <div class="table-container">
+            <table id="mainTable">
+                <thead>
+                    <tr>
+                        <th data-en="Segment ID" data-zh="段落ID">Segment ID</th>
+                        <th data-en="Title" data-zh="标题">Title</th>
+                        <th data-en="Narrative Text" data-zh="叙述文本">Narrative Text</th>
+                        <th data-en="Key Questions" data-zh="关键问题">Key Questions</th>
+                        <th data-en="Data Requirements" data-zh="数据需求">Data Requirements</th>
+                        <th data-en="Data Sources" data-zh="数据源">Data Sources</th>
+                        <th data-en="Visualizations" data-zh="可视化">Visualizations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="segment-row" data-segment="1">
+                        <td>1</td>
+                        <td><strong>Introduction: The Bitcoin Phenomenon Since 2018</strong></td>
+                        <td class="text-truncate">It seems that since 2018, many people have heard about the concept of Bitcoin...</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">3</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="1">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>What is Bitcoin's public awareness timeline?</td></tr>
+                                            <tr><td>How dramatic were the price surges?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Google Trends Data</td>
+                                                <td>Bitcoin search interest over time since 2018</td>
+                                                <td>Search volume, Geographic distribution, Related queries</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price Data</td>
+                                                <td>Bitcoin price history with major surges highlighted</td>
+                                                <td>Daily/hourly prices, Volatility metrics, Major price events</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Media Coverage Data</td>
+                                                <td>News articles and social media mentions</td>
+                                                <td>Sentiment analysis, Coverage volume, Crime-related mentions</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Google Trends API</td>
+                                                <td><a href="https://trends.google.com/trends/" class="url-link">https://trends.google.com/trends/</a></td>
+                                                <td>Free web interface, unofficial APIs available</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CoinGecko API</td>
+                                                <td><a href="https://www.coingecko.com/en/api" class="url-link">https://www.coingecko.com/en/api</a></td>
+                                                <td>Free API with rate limits</td>
+                                            </tr>
+                                            <tr>
+                                                <td>NewsAPI</td>
+                                                <td><a href="https://newsapi.org/" class="url-link">https://newsapi.org/</a></td>
+                                                <td>Free tier available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Line chart showing Google Trends vs Bitcoin price</td></tr>
+                                            <tr><td>Timeline of major Bitcoin news events</td></tr>
+                                            <tr><td>Geographic heatmap of Bitcoin interest</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="segment-row" data-segment="2">
+                        <td>2</td>
+                        <td><strong>The Mystery: What Exactly is Bitcoin?</strong></td>
+                        <td class="text-truncate">However, it still remains very mysterious. What exactly is it?</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">3</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="2">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>What are Bitcoin's fundamental characteristics?</td></tr>
+                                            <tr><td>How does it work technically?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Technical Specifications</td>
+                                                <td>Bitcoin blockchain technical data</td>
+                                                <td>Block time, Transaction throughput, Network hash rate, Node distribution</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Adoption Metrics</td>
+                                                <td>Bitcoin usage and adoption statistics</td>
+                                                <td>Number of wallets, Transaction volume, Merchant adoption</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Comparison Data</td>
+                                                <td>Bitcoin vs traditional currency characteristics</td>
+                                                <td>Transaction fees, Settlement time, Energy consumption</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Blockchain.info API</td>
+                                                <td><a href="https://www.blockchain.com/api" class="url-link">https://www.blockchain.com/api</a></td>
+                                                <td>Free API</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bitnodes</td>
+                                                <td><a href="https://bitnodes.io/api/" class="url-link">https://bitnodes.io/api/</a></td>
+                                                <td>Free API for network data</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cambridge Bitcoin Electricity Consumption Index</td>
+                                                <td><a href="https://ccaf.io/cbeci/api" class="url-link">https://ccaf.io/cbeci/api</a></td>
+                                                <td>Free API</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Infographic explaining Bitcoin vs traditional money</td></tr>
+                                            <tr><td>Network visualization of Bitcoin nodes globally</td></tr>
+                                            <tr><td>Animated explanation of blockchain transactions</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="segment-row" data-segment="3">
+                        <td>3</td>
+                        <td><strong>The Maintainers: Who Keeps Bitcoin Running?</strong></td>
+                        <td class="text-truncate">Who maintains its operation?</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">3</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="3">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Who are the key stakeholders in Bitcoin ecosystem?</td></tr>
+                                            <tr><td>How is Bitcoin governance structured?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Mining Data</td>
+                                                <td>Bitcoin mining pools and hash rate distribution</td>
+                                                <td>Mining pool market share, Geographic distribution, Hash rate trends</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Developer Activity</td>
+                                                <td>Bitcoin Core development statistics</td>
+                                                <td>GitHub commits, Developer contributions, Code changes over time</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Node Distribution</td>
+                                                <td>Bitcoin full node geographic and ISP distribution</td>
+                                                <td>Node count by country, ISP distribution, Node version adoption</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>GitHub API</td>
+                                                <td><a href="https://api.github.com/repos/bitcoin/bitcoin" class="url-link">https://api.github.com/repos/bitcoin/bitcoin</a></td>
+                                                <td>Free API with authentication</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mining Pool Stats</td>
+                                                <td><a href="https://www.blockchain.com/pools" class="url-link">https://www.blockchain.com/pools</a></td>
+                                                <td>Web scraping or manual data collection</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bitnodes API</td>
+                                                <td><a href="https://bitnodes.io/api/" class="url-link">https://bitnodes.io/api/</a></td>
+                                                <td>Free API</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Pie chart of mining pool distribution</td></tr>
+                                            <tr><td>World map showing node distribution</td></tr>
+                                            <tr><td>Timeline of developer activity and major updates</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="segment-row" data-segment="4">
+                        <td>4</td>
+                        <td><strong>The Price Journey: A Decade of Changes</strong></td>
+                        <td class="text-truncate">What kind of price changes has it undergone in the past decade?</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">4</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="4">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>How has Bitcoin price evolved?</td></tr>
+                                            <tr><td>What were the major price catalysts?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Historical Price Data</td>
+                                                <td>Comprehensive Bitcoin price history 2014-2024</td>
+                                                <td>Daily OHLC prices, Market cap, Trading volume, Price volatility</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Market Events</td>
+                                                <td>Major events that influenced Bitcoin price</td>
+                                                <td>Regulatory announcements, Institutional adoption, Technical upgrades, Market crashes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Correlation Data</td>
+                                                <td>Bitcoin price correlation with other assets</td>
+                                                <td>Correlation with stocks, Gold correlation, Traditional currency correlation</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CoinGecko API</td>
+                                                <td><a href="https://www.coingecko.com/en/api/documentation" class="url-link">https://www.coingecko.com/en/api/documentation</a></td>
+                                                <td>Free API with historical data</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Yahoo Finance API</td>
+                                                <td><a href="https://finance.yahoo.com/" class="url-link">https://finance.yahoo.com/</a></td>
+                                                <td>Free API for traditional assets comparison</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CoinMarketCap API</td>
+                                                <td><a href="https://coinmarketcap.com/api/" class="url-link">https://coinmarketcap.com/api/</a></td>
+                                                <td>Free tier available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Interactive candlestick chart with event annotations</td></tr>
+                                            <tr><td>Logarithmic price chart showing major cycles</td></tr>
+                                            <tr><td>Heatmap showing price volatility over time</td></tr>
+                                            <tr><td>Correlation matrix with traditional assets</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="segment-row" data-segment="5">
+                        <td>5</td>
+                        <td><strong>The Winners: Who Has Profited?</strong></td>
+                        <td class="text-truncate">Who has profited from it?</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">3</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="5">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Who are the major Bitcoin holders?</td></tr>
+                                            <tr><td>What are the wealth distribution patterns?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Address Analysis</td>
+                                                <td>Bitcoin address wealth distribution</td>
+                                                <td>Top holder addresses, Wealth concentration, Dormant vs active addresses</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Institutional Holdings</td>
+                                                <td>Corporate and institutional Bitcoin holdings</td>
+                                                <td>Public company holdings, ETF holdings, Exchange reserves</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Exchange Data</td>
+                                                <td>Trading patterns and exchange flows</td>
+                                                <td>Exchange inflows/outflows, Trading volume by exchange, Whale movements</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>BitcoinTreasuries.net</td>
+                                                <td><a href="https://bitcointreasuries.net/" class="url-link">https://bitcointreasuries.net/</a></td>
+                                                <td>Manual data collection or web scraping</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Glassnode API</td>
+                                                <td><a href="https://glassnode.com/" class="url-link">https://glassnode.com/</a></td>
+                                                <td>Paid API for advanced metrics</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Whale Alert API</td>
+                                                <td><a href="https://whale-alert.io/" class="url-link">https://whale-alert.io/</a></td>
+                                                <td>Freemium API</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Treemap showing Bitcoin wealth distribution</td></tr>
+                                            <tr><td>Timeline of major institutional adoptions</td></tr>
+                                            <tr><td>Sankey diagram of Bitcoin flows between addresses</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr class="segment-row" data-segment="6">
+                        <td>6</td>
+                        <td><strong>The Future: What Lies Ahead?</strong></td>
+                        <td class="text-truncate">And what does its future hold?</td>
+                        <td><span class="badge">2</span></td>
+                        <td><span class="badge success">3</span></td>
+                        <td><span class="badge warning">3</span></td>
+                        <td><span class="badge danger">3</span></td>
+                    </tr>
+                    <tr class="details-row" data-segment="6">
+                        <td colspan="7">
+                            <div class="details-content">
+                                <div class="sub-table">
+                                    <h3 data-en="🔍 Key Questions" data-zh="🔍 关键问题">🔍 Key Questions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Question" data-zh="问题">Question</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>What are the future trends and predictions?</td></tr>
+                                            <tr><td>What challenges and opportunities exist?</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📊 Data Requirements" data-zh="📊 数据需求">📊 Data Requirements</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                                                <th data-en="Description" data-zh="描述">Description</th>
+                                                <th data-en="Specific Metrics" data-zh="具体指标">Specific Metrics</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Adoption Trends</td>
+                                                <td>Bitcoin adoption metrics and projections</td>
+                                                <td>Payment adoption, Country-level adoption, Lightning Network growth</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Regulatory Landscape</td>
+                                                <td>Global Bitcoin regulation status</td>
+                                                <td>Legal status by country, Regulatory developments, CBDC competition</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Technical Developments</td>
+                                                <td>Bitcoin protocol improvements and scaling solutions</td>
+                                                <td>Lightning Network capacity, Taproot adoption, Layer 2 solutions</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="🔗 Data Sources" data-zh="🔗 数据源">🔗 Data Sources</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-en="Source" data-zh="来源">Source</th>
+                                                <th>URL</th>
+                                                <th data-en="Access Method" data-zh="访问方法">Access Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Lightning Network Statistics</td>
+                                                <td><a href="https://1ml.com/" class="url-link">https://1ml.com/</a></td>
+                                                <td>API available for network data</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Regulatory databases</td>
+                                                <td>Various government websites</td>
+                                                <td>Manual research and compilation</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bitcoin development repositories</td>
+                                                <td><a href="https://github.com/bitcoin/bips" class="url-link">https://github.com/bitcoin/bips</a></td>
+                                                <td>GitHub API</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="sub-table">
+                                    <h3 data-en="📈 Visualization Suggestions" data-zh="📈 可视化建议">📈 Visualization Suggestions</h3>
+                                    <table>
+                                        <thead>
+                                            <tr><th data-en="Suggestion" data-zh="建议">Suggestion</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>World map showing Bitcoin legal status</td></tr>
+                                            <tr><td>Growth projections with confidence intervals</td></tr>
+                                            <tr><td>Technology adoption timeline and roadmap</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2 data-en="🔗 Cross-Segment Data Needs" data-zh="🔗 跨段落数据需求" id="requirements">🔗 Cross-Segment Data Needs</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-en="Data Type" data-zh="数据类型">Data Type</th>
+                        <th data-en="Description" data-zh="描述">Description</th>
+                        <th data-en="Importance" data-zh="重要性">Importance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Time Series Alignment</td>
+                        <td>Ensuring all time-based data uses consistent timestamps</td>
+                        <td><span class="badge danger">Critical for narrative flow</span></td>
+                    </tr>
+                    <tr>
+                        <td>Data Quality Metrics</td>
+                        <td>Data reliability and source credibility scores</td>
+                        <td><span class="badge warning">Essential for trustworthy storytelling</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 data-en="⚙️ Technical Requirements" data-zh="⚙️ 技术要求">⚙️ Technical Requirements</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-en="Category" data-zh="类别">Category</th>
+                        <th data-en="Requirements" data-zh="要求">Requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong data-en="Data Formats" data-zh="数据格式">Data Formats</strong></td>
+                        <td>JSON, CSV, API responses</td>
+                    </tr>
+                    <tr>
+                        <td><strong data-en="Update Frequency" data-zh="更新频率">Update Frequency</strong></td>
+                        <td>Daily for price data, weekly for other metrics</td>
+                    </tr>
+                    <tr>
+                        <td><strong data-en="Data Retention" data-zh="数据保留">Data Retention</strong></td>
+                        <td>Full historical data with archiving strategy</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 data-en="🛡️ Ethical Considerations" data-zh="🛡️ 伦理考虑" id="ethics">🛡️ Ethical Considerations</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-en="Ethical Consideration" data-zh="伦理考虑">Ethical Consideration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Privacy protection for individual addresses</td>
+                    </tr>
+                    <tr>
+                        <td>Balanced representation of risks and benefits</td>
+                    </tr>
+                    <tr>
+                        <td>Transparent disclosure of data sources and limitations</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p data-en="© 2024 Bitcoin Value Proposition Analysis Project" data-zh="© 2024 比特币价值主张分析项目">© 2024 Bitcoin Value Proposition Analysis Project</p>
+        <p data-en="Created for academic research and value proposition analysis" data-zh="为学术研究和价值主张分析创建">Created for academic research and value proposition analysis</p>
+        <p><a href="bitcoin_narrative_data_mapping.json" data-en="View Raw Data (JSON)" data-zh="查看原始数据 (JSON)">View Raw Data (JSON)</a></p>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        function switchLanguage(lang) {
+            const elements = document.querySelectorAll('[data-en][data-zh]');
+            elements.forEach(element => {
+                if (lang === 'en') {
+                    element.textContent = element.getAttribute('data-en');
+                } else {
+                    element.textContent = element.getAttribute('data-zh');
+                }
+            });
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Initialize language
+        document.addEventListener('DOMContentLoaded', function() {
+            const preferredLang = localStorage.getItem('preferred-language') || 'en';
+            switchLanguage(preferredLang);
+            
+            // Language button event listeners
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchLanguage(this.getAttribute('data-lang'));
+                });
+            });
+
+            // Navigation functionality
+            const navLinks = document.querySelectorAll('.nav-bar a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(nl => nl.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const target = this.getAttribute('href');
+                    if (target) {
+                        const element = document.querySelector(target);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+
+            // Table interaction functionality
+            const segmentRows = document.querySelectorAll('.segment-row');
+            
+            segmentRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const segment = this.getAttribute('data-segment');
+                    const detailsRow = document.querySelector(`.details-row[data-segment="${segment}"]`);
+                    
+                    // Toggle expand/collapse state
+                    if (detailsRow.classList.contains('show')) {
+                        detailsRow.classList.remove('show');
+                        this.classList.remove('expanded');
+                    } else {
+                        // First close all other expanded rows
+                        document.querySelectorAll('.details-row.show').forEach(dr => {
+                            dr.classList.remove('show');
+                        });
+                        document.querySelectorAll('.segment-row.expanded').forEach(sr => {
+                            sr.classList.remove('expanded');
+                        });
+                        
+                        // Expand current row
+                        detailsRow.classList.add('show');
+                        this.classList.add('expanded');
+                    }
+                });
+            });
+
+            // Add click-to-expand functionality for truncated text
+            document.querySelectorAll('.text-truncate').forEach(element => {
+                const fullText = element.textContent;
+                if (fullText.length > 100) {
+                    const shortText = fullText.substring(0, 100) + '...';
+                    let isExpanded = false;
+                    
+                    element.textContent = shortText;
+                    element.style.cursor = 'pointer';
+                    element.title = 'Click to expand';
+                    
+                    element.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Prevent triggering row expansion
+                        if (isExpanded) {
+                            this.textContent = shortText;
+                            isExpanded = false;
+                        } else {
+                            this.textContent = fullText;
+                            isExpanded = true;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
